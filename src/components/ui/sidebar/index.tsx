@@ -10,6 +10,7 @@ import { Sheet, SheetContent } from "@/components/ui/sheet"
 import { Skeleton } from "@/components/ui/skeleton"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { SidebarContext, useSidebar } from "./context"
+import { type SidebarContextType } from "./types"
 import { SIDEBAR_COOKIE_MAX_AGE, SIDEBAR_COOKIE_NAME, SIDEBAR_KEYBOARD_SHORTCUT, SIDEBAR_WIDTH, SIDEBAR_WIDTH_ICON, SIDEBAR_WIDTH_MOBILE } from "./constants"
 import { SidebarMenuButton, sidebarMenuButtonVariants } from "./menu-button"
 
@@ -223,4 +224,3 @@ export {
   useSidebar,
   SidebarMenuButton,
 }
-
