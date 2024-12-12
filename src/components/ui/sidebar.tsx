@@ -196,10 +196,11 @@ const Sidebar = React.forwardRef<
           <SheetContent
             data-sidebar="sidebar"
             data-mobile="true"
-            className="w-[--sidebar-width] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
+            className="w-[--sidebar-width] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden bg-opacity-50 backdrop-blur-sm"
             style={
               {
                 "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
+                "--tw-bg-opacity": "0.1",
               } as React.CSSProperties
             }
             side={side}
