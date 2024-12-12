@@ -9,7 +9,36 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      air_freight_shipments: {
+        Row: {
+          cargo_description: string
+          cargo_weight: string
+          consignee_details: string
+          created_at: string
+          id: string
+          shipper_details: string
+          terms_of_shipment: string
+        }
+        Insert: {
+          cargo_description: string
+          cargo_weight: string
+          consignee_details: string
+          created_at?: string
+          id?: string
+          shipper_details: string
+          terms_of_shipment: string
+        }
+        Update: {
+          cargo_description?: string
+          cargo_weight?: string
+          consignee_details?: string
+          created_at?: string
+          id?: string
+          shipper_details?: string
+          terms_of_shipment?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

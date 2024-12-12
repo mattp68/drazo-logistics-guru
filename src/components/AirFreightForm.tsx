@@ -7,20 +7,23 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { ArrowLeft } from "lucide-react";
 import { UploadSection } from "./air-freight/UploadSection";
+import type { Database } from "@/integrations/supabase/types";
 
 interface AirFreightFormProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
+type AirFreightShipment = Database['public']['Tables']['air_freight_shipments']['Insert'];
+
 const AirFreightForm = ({ isOpen, onClose }: AirFreightFormProps) => {
   const { toast } = useToast();
-  const [formData, setFormData] = useState({
-    termsOfShipment: "",
-    shipperDetails: "",
-    consigneeDetails: "",
-    cargoDescription: "",
-    cargoWeight: "",
+  const [formData, setFormData] = useState<AirFreightShipment>({
+    terms_of_shipment: "",
+    shipper_details: "",
+    consignee_details: "",
+    cargo_description: "",
+    cargo_weight: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -54,15 +57,7 @@ const AirFreightForm = ({ isOpen, onClose }: AirFreightFormProps) => {
     try {
       const { error } = await supabase
         .from('air_freight_shipments')
-        .insert([
-          {
-            terms_of_shipment: formData.termsOfShipment,
-            shipper_details: formData.shipperDetails,
-            consignee_details: formData.consigneeDetails,
-            cargo_description: formData.cargoDescription,
-            cargo_weight: formData.cargoWeight,
-          }
-        ]);
+        .insert([formData]);
 
       if (error) throw error;
 
@@ -108,8 +103,8 @@ const AirFreightForm = ({ isOpen, onClose }: AirFreightFormProps) => {
             <div>
               <label className="text-sm text-blue-500 font-medium">Terms of shipment</label>
               <Select
-                value={formData.termsOfShipment}
-                onValueChange={(value) => setFormData({ ...formData, termsOfShipment: value })}
+                value={formData.terms_of_shipment}
+                onValueChange={(value) => setFormData({ ...formData, terms_of_shipment: value })}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Select terms" />
@@ -126,8 +121,8 @@ const AirFreightForm = ({ isOpen, onClose }: AirFreightFormProps) => {
               <label className="text-sm text-blue-500 font-medium">Shipper Details</label>
               <Textarea
                 placeholder="Name, Tel. No., e-mail and address"
-                value={formData.shipperDetails}
-                onChange={(e) => setFormData({ ...formData, shipperDetails: e.target.value })}
+                value={formData.shipper_details}
+                onChange={(e) => setFormData({ ...formData, shipper_details: e.target.value })}
                 className="min-h-[100px]"
               />
             </div>
@@ -135,8 +130,8 @@ const AirFreightForm = ({ isOpen, onClose }: AirFreightFormProps) => {
             <div>
               <label className="text-sm text-blue-500 font-medium">Consignee Details</label>
               <Textarea
-                value={formData.consigneeDetails}
-                onChange={(e) => setFormData({ ...formData, consigneeDetails: e.target.value })}
+                value={formData.consignee_details}
+                onChange={(e) => setFormData({ ...formData, consignee_details: e.target.value })}
                 className="min-h-[100px]"
               />
             </div>
@@ -144,8 +139,8 @@ const AirFreightForm = ({ isOpen, onClose }: AirFreightFormProps) => {
             <div>
               <label className="text-sm text-blue-500 font-medium">Cargo description</label>
               <Textarea
-                value={formData.cargoDescription}
-                onChange={(e) => setFormData({ ...formData, cargoDescription: e.target.value })}
+                value={formData.cargo_description}
+                onChange={(e) => setFormData({ ...formData, cargo_description: e.target.value })}
                 className="min-h-[100px]"
               />
             </div>
@@ -153,8 +148,8 @@ const AirFreightForm = ({ isOpen, onClose }: AirFreightFormProps) => {
             <div>
               <label className="text-sm text-blue-500 font-medium">Cargo weight</label>
               <Textarea
-                value={formData.cargoWeight}
-                onChange={(e) => setFormData({ ...formData, cargoWeight: e.target.value })}
+                value={formData.cargo_weight}
+                onChange={(e) => setFormData({ ...formData, cargo_weight: e.target.value })}
               />
             </div>
           </div>
