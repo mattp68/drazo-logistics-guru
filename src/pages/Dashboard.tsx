@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { Plane, Ship, Truck, Warehouse, FileCheck } from "lucide-react";
 import ServiceCard from "@/components/ServiceCard";
 import { useToast } from "@/components/ui/use-toast";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
+import AirFreightForm from "@/components/AirFreightForm";
 
 const services = [
   {
@@ -39,12 +41,17 @@ const services = [
 
 const Dashboard = () => {
   const { toast } = useToast();
+  const [isAirFreightOpen, setIsAirFreightOpen] = useState(false);
 
   const handleServiceClick = (path: string) => {
-    toast({
-      title: "Coming Soon",
-      description: "This service will be available soon!",
-    });
+    if (path === "/air-freight") {
+      setIsAirFreightOpen(true);
+    } else {
+      toast({
+        title: "Coming Soon",
+        description: "This service will be available soon!",
+      });
+    }
   };
 
   return (
@@ -73,6 +80,11 @@ const Dashboard = () => {
               />
             ))}
           </div>
+
+          <AirFreightForm 
+            isOpen={isAirFreightOpen}
+            onClose={() => setIsAirFreightOpen(false)}
+          />
         </main>
       </div>
     </SidebarProvider>
