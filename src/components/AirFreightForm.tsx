@@ -88,12 +88,12 @@ const AirFreightForm = ({ isOpen, onClose }: AirFreightFormProps) => {
         <DialogHeader className="sticky top-0 bg-white z-10 pb-4 border-b">
           <Button 
             variant="ghost" 
-            className="absolute left-4 top-4"
+            className="absolute left-2 top-2 p-2 h-auto"
             onClick={onClose}
           >
             <ArrowLeft className="h-4 w-4" />
           </Button>
-          <DialogTitle className="text-center">Air Freight</DialogTitle>
+          <DialogTitle className="text-center pt-2">Air Freight</DialogTitle>
         </DialogHeader>
 
         <div className="space-y-6 py-4">
