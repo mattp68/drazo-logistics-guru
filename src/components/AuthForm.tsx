@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 
 interface AuthFormProps {
   type: "signin" | "signup";
@@ -52,6 +52,12 @@ const AuthForm = ({ type, onSubmit }: AuthFormProps) => {
       <Button type="submit" className="w-full bg-primary hover:bg-primary-dark">
         {type === "signin" ? "Sign In" : "Sign Up"}
       </Button>
+      {type === "signin" && (
+        <p className="text-sm text-center text-gray-600">
+          If you just signed up, you may need to confirm your email first.
+          Please check your inbox.
+        </p>
+      )}
     </form>
   );
 };
