@@ -5,7 +5,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import { ArrowLeft, Upload } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
+import { UploadSection } from "./air-freight/UploadSection";
 
 interface AirFreightFormProps {
   isOpen: boolean;
@@ -83,8 +84,8 @@ const AirFreightForm = ({ isOpen, onClose }: AirFreightFormProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="bg-white max-w-md w-full">
-        <DialogHeader>
+      <DialogContent className="bg-white max-w-md w-full max-h-[90vh] overflow-y-auto">
+        <DialogHeader className="sticky top-0 bg-white z-10 pb-4 border-b">
           <Button 
             variant="ghost" 
             className="absolute left-4 top-4"
@@ -158,59 +159,7 @@ const AirFreightForm = ({ isOpen, onClose }: AirFreightFormProps) => {
             </div>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-gray-600 font-medium">Uploads</h3>
-            
-            <div className="space-y-2">
-              <Button variant="outline" className="w-full justify-start" onClick={() => document.getElementById('packing-list')?.click()}>
-                <Upload className="h-4 w-4 mr-2 text-blue-500" />
-                <span className="text-blue-500">Packing list</span>
-              </Button>
-              <input
-                type="file"
-                id="packing-list"
-                className="hidden"
-                onChange={async (e) => {
-                  const file = e.target.files?.[0];
-                  if (file) {
-                    await handleFileUpload(file, 'packing-list');
-                  }
-                }}
-              />
-              
-              <Button variant="outline" className="w-full justify-start" onClick={() => document.getElementById('commercial-list')?.click()}>
-                <Upload className="h-4 w-4 mr-2 text-blue-500" />
-                <span className="text-blue-500">Commercial List</span>
-              </Button>
-              <input
-                type="file"
-                id="commercial-list"
-                className="hidden"
-                onChange={async (e) => {
-                  const file = e.target.files?.[0];
-                  if (file) {
-                    await handleFileUpload(file, 'commercial-list');
-                  }
-                }}
-              />
-              
-              <Button variant="outline" className="w-full justify-start" onClick={() => document.getElementById('cargo-photo')?.click()}>
-                <Upload className="h-4 w-4 mr-2 text-blue-500" />
-                <span className="text-blue-500">Cargo photo</span>
-              </Button>
-              <input
-                type="file"
-                id="cargo-photo"
-                className="hidden"
-                onChange={async (e) => {
-                  const file = e.target.files?.[0];
-                  if (file) {
-                    await handleFileUpload(file, 'cargo-photo');
-                  }
-                }}
-              />
-            </div>
-          </div>
+          <UploadSection onFileUpload={handleFileUpload} />
 
           <Button
             className="w-full"
