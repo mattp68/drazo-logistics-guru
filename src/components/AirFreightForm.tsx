@@ -28,15 +28,32 @@ const AirFreightForm = ({ isOpen, onClose }: AirFreightFormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleFileUpload = async (file: File, type: string) => {
-    const fileExt = file.name.split('.').pop();
-    const fileName = `${Math.random()}.${fileExt}`;
-    const filePath = `${type}/${fileName}`;
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Math.random()}.${fileExt}`;
+      const filePath = `${type}/${fileName}`;
 
-    const { error: uploadError } = await supabase.storage
-      .from('shipment-documents')
-      .upload(filePath, file);
+      const { error: uploadError } = await supabase.storage
+        .from('shipment-documents')
+        .upload(filePath, file);
 
-    if (uploadError) {
+      if (uploadError) {
+        console.error('Upload error:', uploadError);
+        toast({
+          title: "Error",
+          description: "Failed to upload file",
+          variant: "destructive",
+        });
+        return null;
+      }
+
+      const { data } = supabase.storage
+        .from('shipment-documents')
+        .getPublicUrl(filePath);
+
+      return data.publicUrl;
+    } catch (error) {
+      console.error('File upload error:', error);
       toast({
         title: "Error",
         description: "Failed to upload file",
@@ -44,12 +61,6 @@ const AirFreightForm = ({ isOpen, onClose }: AirFreightFormProps) => {
       });
       return null;
     }
-
-    const { data: { publicUrl } } = supabase.storage
-      .from('shipment-documents')
-      .getPublicUrl(filePath);
-
-    return publicUrl;
   };
 
   const handleSubmit = async () => {
@@ -59,7 +70,10 @@ const AirFreightForm = ({ isOpen, onClose }: AirFreightFormProps) => {
         .from('air_freight_shipments')
         .insert([formData]);
 
-      if (error) throw error;
+      if (error) {
+        console.error('Submission error:', error);
+        throw error;
+      }
 
       toast({
         title: "Success",
@@ -67,6 +81,7 @@ const AirFreightForm = ({ isOpen, onClose }: AirFreightFormProps) => {
       });
       onClose();
     } catch (error) {
+      console.error('Form submission error:', error);
       toast({
         title: "Error",
         description: "Failed to save shipment details",
@@ -161,7 +176,7 @@ const AirFreightForm = ({ isOpen, onClose }: AirFreightFormProps) => {
             onClick={handleSubmit}
             disabled={isSubmitting}
           >
-            Proceed
+            {isSubmitting ? 'Submitting...' : 'Proceed'}
           </Button>
         </div>
       </DialogContent>
