@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { User, Phone } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -91,66 +92,68 @@ const Profile = () => {
   };
 
   return (
-    <div className="flex h-screen bg-gray-100">
-      <AppSidebar />
-      <main className="flex-1 p-8 overflow-y-auto">
-        <Card className="max-w-2xl mx-auto">
-          <CardHeader>
-            <CardTitle className="text-2xl font-bold">Profile Settings</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <Label htmlFor="firstName">First Name</Label>
-                <div className="relative">
-                  <Input
-                    id="firstName"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    placeholder="Enter your first name"
-                    className="pl-10"
-                  />
-                  <User className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+    <SidebarProvider>
+      <div className="flex h-screen bg-gray-100">
+        <AppSidebar />
+        <main className="flex-1 p-8 overflow-y-auto">
+          <Card className="max-w-2xl mx-auto">
+            <CardHeader>
+              <CardTitle className="text-2xl font-bold">Profile Settings</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <Label htmlFor="firstName">First Name</Label>
+                  <div className="relative">
+                    <Input
+                      id="firstName"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      placeholder="Enter your first name"
+                      className="pl-10"
+                    />
+                    <User className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="lastName">Last Name</Label>
+                  <div className="relative">
+                    <Input
+                      id="lastName"
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
+                      placeholder="Enter your last name"
+                      className="pl-10"
+                    />
+                    <User className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                  </div>
+                </div>
+                <div className="space-y-2 md:col-span-2">
+                  <Label htmlFor="phoneNumber">Phone Number</Label>
+                  <div className="relative">
+                    <Input
+                      id="phoneNumber"
+                      value={phoneNumber}
+                      onChange={(e) => setPhoneNumber(e.target.value)}
+                      placeholder="Enter your phone number"
+                      className="pl-10"
+                    />
+                    <Phone className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                  </div>
                 </div>
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="lastName">Last Name</Label>
-                <div className="relative">
-                  <Input
-                    id="lastName"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    placeholder="Enter your last name"
-                    className="pl-10"
-                  />
-                  <User className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                </div>
-              </div>
-              <div className="space-y-2 md:col-span-2">
-                <Label htmlFor="phoneNumber">Phone Number</Label>
-                <div className="relative">
-                  <Input
-                    id="phoneNumber"
-                    value={phoneNumber}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
-                    placeholder="Enter your phone number"
-                    className="pl-10"
-                  />
-                  <Phone className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                </div>
-              </div>
-            </div>
-            <Button
-              onClick={updateProfile}
-              className="w-full md:w-auto"
-              disabled={loading}
-            >
-              Save Changes
-            </Button>
-          </CardContent>
-        </Card>
-      </main>
-    </div>
+              <Button
+                onClick={updateProfile}
+                className="w-full md:w-auto"
+                disabled={loading}
+              >
+                Save Changes
+              </Button>
+            </CardContent>
+          </Card>
+        </main>
+      </div>
+    </SidebarProvider>
   );
 };
 
